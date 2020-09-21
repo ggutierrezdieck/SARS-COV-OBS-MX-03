@@ -10,6 +10,10 @@ SiNo = (
 
 
 class paciente(models.Model):
+
+    def __str__(self):
+        return self.id
+
     ESCOLARIDADES = (
         ('N', 'Ninguna'),
         ('P', 'Primaria'),
@@ -36,7 +40,7 @@ class paciente(models.Model):
     ocupacion = models.CharField(max_length=120, blank=True)
 
 
-class Cuestionario(models.Model):
+class cuestionario(models.Model):
     paciente = models.ForeignKey(paciente, on_delete=models.CASCADE,
                                  related_name='cuestioarios')
     folio = models.IntegerField()
@@ -176,4 +180,3 @@ class pruebas(models.Model):
     resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS)
     igg = models.CharField(max_length=10, choices=RESULTADOS)
     igm = models.CharField(max_length=10, choices=RESULTADOS)
-
