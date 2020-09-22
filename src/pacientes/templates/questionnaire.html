@@ -2,10 +2,20 @@
 
    {% block content %}
  
-        <h1> Forms</h1>
+        <h1> Questionario</h1>
+          <p1>Paciente {{id}}</p1>
         <form action="" method="post">
             {% csrf_token %}
-            {{form.as_p}}
+
+            {{fcuestionario.as_p}}
+            {{fembarazo.as_p}}
+            {{fviajes.as_p}}
+            {{fmorbilidad.as_p}}
+            {{fhabitos.as_p}}
+            {{fsintomas.as_p}}
+            {{ftrataminto.as_p}}
+            {{fanteceddentes.as_p}}
+            {{fpruebas.as_p}}
             {% if messages %}
             {% for message in messages %}
                 <p> message </p>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+   {% block content %}
+ 
+        <h1> Forms</h1>
+          {{paciente.id}}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>{{last_id}}</p>
+            {{form.as_p}}
+            {% if messages %}
+            {% for message in messages %}
+                <p> message </p>
+            {% endfor %}
+            {% endif %}
+        <input type="submit" value="Submit">
+        </form>
+ 
+   {% endblock %}

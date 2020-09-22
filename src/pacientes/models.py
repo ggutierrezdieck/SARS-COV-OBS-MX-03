@@ -12,7 +12,7 @@ SiNo = (
 class paciente(models.Model):
 
     def __str__(self):
-        return self.id
+        return 'Paciente' + str(self.id)
 
     ESCOLARIDADES = (
         ('N', 'Ninguna'),
@@ -44,7 +44,7 @@ class cuestionario(models.Model):
     paciente = models.ForeignKey(paciente, on_delete=models.CASCADE,
                                  related_name='cuestioarios')
     folio = models.IntegerField()
-    fechaCuestioario = models.DateField()    
+    fechaCuestioario = models.DateField()
 
 
 class embarazo(models.Model):
