@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
     {% block content %}
-        <ul>
-        {% for paciente in pacientes%}
-            <li>{{paciente.id}}
-        {% endfor %}
-        </ul>
+
+
+{%include 'navBar.html' %}
+{%include 'pacienteList.html' %}
+
     {% endblock %}

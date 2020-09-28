@@ -50,7 +50,6 @@ def questionnaire_view(request, id):
     #         # message.success(request, ('textmessate'))
     #         return render(request, 'index.html', context)
     # else:
-
     context['fcuestionario'] = cuestionarioForm(cue)
     context['fembarazo'] = embarazoForm(emb)
     context['fviajes'] = viajesForm(via)
@@ -65,7 +64,7 @@ def questionnaire_view(request, id):
 
 
 def nuevo_view(request):
-    queryset = len(paciente.objects.all())
+    queryset = len(paciente.objects.all()) + 1
     context = {
         'last_id': queryset
     }
