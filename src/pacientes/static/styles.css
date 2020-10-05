@@ -1,7 +1,50 @@
+/*Pallet*/
+:root{
+    --bgSecundary: rgba(119, 150, 255, 0.5);
+    --bgLink : #a0b7db;
+    --bgPrimary :white;
+}
+
+.bg-lightBlue{
+    background: var(--bgSecundary);
+}
+
+a.text-dark:focus, a.text-dark:hover {
+    background: var(--bgLink)
+    padding: 5px;
+    text-decoration: none
+}
+
 .date_picker{
     
 }
 
 .cerrar-session{
     display: hidden;
+}
+
+.secciones{
+    background: rgba(119, 150, 255, 0.5);
+    padding: 5px;
+}
+
+.float {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+#floating-header{
+    display: block;
+    z-index: 99;
+    width: 105%;
+    background:var(--bgPrimary);
+    padding: 1em;
+}
+.float + .content {
+  padding-top: 60px;
+}
+.float-button{
+        right:1vw;
+        top:20vw;
 }
