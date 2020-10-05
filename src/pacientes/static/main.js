@@ -33,6 +33,6 @@ $(document).ready(function() {
       request.send();
       $('#content > #sidebar').hide();
       return false
-    });s
+    });
  });
 

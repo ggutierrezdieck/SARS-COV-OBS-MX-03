@@ -9,24 +9,32 @@
     background: var(--bgSecundary);
 }
 
-a.text-dark:focus, a.text-dark:hover {
-    background: var(--bgLink)
+
+ a:focus, a:hover {
+    background: var(--bgLink);
     padding: 5px;
     text-decoration: none
 }
 
-.date_picker{
-    
+
+/*Patient list elements, child a of ul*/
+ ul a.text-dark:focus, ul a.text-dark:hover {
+    background: white ;
+    padding: 5px;
+    text-decoration: none
 }
 
+/*Hidding cerrar cession until logged in*/
 .cerrar-session{
-    display: hidden;
+    display: none;
 }
 
-.secciones{
+.seccions{
     background: rgba(119, 150, 255, 0.5);
     padding: 5px;
 }
+
+/*Makin stikin header for patients questionnair */
 
 .float {
   position: sticky;
