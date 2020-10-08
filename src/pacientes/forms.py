@@ -25,6 +25,11 @@ class cuestionarioForm(forms.ModelForm):
         model = cuestionario
         fields = '__all__'
         exclude = ['paciente']
+        widgets = {
+                    'fechaCuestioario': forms.DateInput(attrs={
+                                                                'type': 'date',
+                                                                }),
+                    }
 
 
 class embarazoForm(forms.ModelForm):
