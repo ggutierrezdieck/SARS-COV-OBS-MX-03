@@ -17,53 +17,96 @@ def index_view(request):
     context = {
         'pacientes': queryset
     }
+    # Calling the right methdod whenposting from within the ajax content
+    if request.method == 'POST':
+        if 'fechaNacimiento' in request.POST.keys():
+            nuevo_view(request)
+        elif 'folio' in request.POST.keys():
+            questionnaire_view(request, request.POST['paciente'])
     return render(request, 'index.html', context)
 
 
 def questionnaire_view(request, id):
     context = {'id': id}
-    # pac = paciente.objects.get(pk=id)
+
+    # Getting inctances for the requested id
     try:
         cue = cuestionario.objects.get(paciente=id)
-        emb = embarazo.objects.get(paciente=id)
-        via = viajes.objects.get(paciente=id)
-        mor = morbilidad.objects.get(paciente=id)
-        hab = habitosSaludables.objects.get(paciente=id)
-        sin = sintomasCovid.objects.get(paciente=id)
-        tra = tratamientoCovid.objects.get(paciente=id)
-        ant = antecedentesEpidimiologicos.objects.get(paciente=id)
-        pru = pruebas.objects.get(paciente=id)
     except ObjectDoesNotExist:
         cue = None
+    try:
+        emb = embarazo.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         emb = None
+    try:
+        via = viajes.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         via = None
+    try:
+        mor = morbilidad.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         mor = None
+    try:
+        hab = habitosSaludables.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         hab = None
+    try:
+        sin = sintomasCovid.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         sin = None
+    try:
+        tra = tratamientoCovid.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         tra = None
+    try:
+        ant = antecedentesEpidimiologicos.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         ant = None
+    try:
+        pru = pruebas.objects.get(paciente=id)
+    except ObjectDoesNotExist:
         pru = None
 
-    fcuestionario = cuestionarioForm(cue)
-    fembarazo = embarazoForm(emb)
-    fviajes = viajesForm(via)
-    fmorbilidad = morbilidadForm(mor)
-    fhabitos = habitosSaludablesForm(hab)
-    fsintomas = sintomasCovidForm(sin)
-    ftrataminto = tratamientoCovidForm(tra)
-    fanteceddentes = antecedentesEpidimiologicosForm(ant)
-    fpruebas = pruebasForm(pru)
-    print(request.method)
+    # Createing questionairs with intances created above
+    fcuestionario = cuestionarioForm(instance=cue)
+    fembarazo = embarazoForm(instance=emb)
+    fviajes = viajesForm(instance=via)
+    fmorbilidad = morbilidadForm(instance=mor)
+    fhabitos = habitosSaludablesForm(instance=hab)
+    fsintomas = sintomasCovidForm(instance=sin)
+    ftrataminto = tratamientoCovidForm(instance=tra)
+    fanteceddentes = antecedentesEpidimiologicosForm(instance=ant)
+    fpruebas = pruebasForm(instance=pru)
+
     if request.method == 'POST':
-        fcuestionario = cuestionarioForm(request.POST)
-        if fcuestionario.is_valid():
-            print(id)
-            add_id = fcuestionario.save(commit=False)
-            add_id.paciente = get_object_or_404(paciente, pk=id)
-            add_id.save()
-            return render(request, 'index.html', context)
-        else:
-            print('One form is not valid')
+        fcuestionario = cuestionarioForm(request.POST, instance=cue)
+        fembarazo = embarazoForm(request.POST, instance=emb)
+        fviajes = viajesForm(request.POST, instance=via)
+        fmorbilidad = morbilidadForm(request.POST, instance=mor)
+        fhabitos = habitosSaludablesForm(request.POST, instance=hab)
+        fsintomas = sintomasCovidForm(request.POST, instance=sin)
+        ftrataminto = tratamientoCovidForm(request.POST, instance=tra)
+        fanteceddentes = antecedentesEpidimiologicosForm(request.POST, instance=ant)
+        fpruebas = pruebasForm(request.POST, instance=pru)
+
+        forms = [fcuestionario, fembarazo, fviajes, fmorbilidad, fhabitos,
+                 fsintomas, ftrataminto, fanteceddentes, fpruebas]
+        valid_forms = 0
+        print(forms)
+        for form in forms:
+            print(form)
+            print(form.is_valid())
+            print(form.is_bound)
+            if form.is_valid():
+                add_id = form.save(commit=False)
+                add_id.paciente = get_object_or_404(paciente, pk=id)
+                add_id.save()
+                valid_forms += 1
+                if valid_forms == len(forms):
+                    return render(request, 'index.html', context)
+            else:
+                print('One form is not valid')
+
     else:
         context['fcuestionario'] = fcuestionario
         context['fembarazo'] = fembarazo
@@ -83,7 +126,7 @@ def nuevo_view(request):
     context = {
         'last_id': queryset
     }
-
+    # print(request.method)
     if request.method == 'POST':
         form = pacienteForm(request.POST or None)
         if form.is_valid():

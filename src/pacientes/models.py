@@ -41,22 +41,31 @@ class paciente(models.Model):
 
 
 class cuestionario(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='cuestioarios')
-    folio = models.IntegerField(blank=True)
-    fechaCuestioario = models.DateField()
+    folio = models.IntegerField(blank=True, null=True)
+    fechaCuestioario = models.DateField(null=True)
 
 
 class embarazo(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='embarazos')
     embarazo = models.CharField(max_length=10, choices=SiNo, blank=True)
     numerodeMeses = models.IntegerField(validators=[MinValueValidator(0),
-                                        MaxValueValidator(9)], blank=True)
+                                        MaxValueValidator(9)], blank=True, null=True)
     postparto = models.CharField(max_length=10, choices=SiNo, blank=True)
 
 
 class viajes(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='viajes', blank=True)
     salioDelPais = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -66,6 +75,9 @@ class viajes(models.Model):
 
 
 class morbilidad(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='morbilidades')
     morbilidad = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -86,22 +98,28 @@ class morbilidad(models.Model):
 
 
 class habitosSaludables(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='habitos')
     frutas = models.CharField(max_length=10, choices=SiNo, blank=True)
-    vecesAzucar = models.IntegerField( blank=True)
+    vecesAzucar = models.IntegerField(blank=True, null=True)
     carne = models.CharField(max_length=10, choices=SiNo, blank=True)
     verduras = models.CharField(max_length=10, choices=SiNo, blank=True)
     acitivad = models.CharField(max_length=10, choices=SiNo, blank=True)
-    vasosAgua = models.IntegerField(blank=True)
+    vasosAgua = models.IntegerField(blank=True, null=True)
     bebidasAzucar = models.CharField(max_length=10, choices=SiNo, blank=True)
     horasSueno = models.CharField(max_length=10, blank=True)
     fuma = models.CharField(max_length=10, choices=SiNo, blank=True)
-    cigarrosAlDia = models.IntegerField(blank=True)
+    cigarrosAlDia = models.IntegerField(blank=True, null=True)
     alcohol = models.CharField(max_length=10, choices=SiNo, blank=True)
 
 
 class sintomasCovid(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='sintomas')
     fiebre = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -128,6 +146,9 @@ class sintomasCovid(models.Model):
 
 
 class tratamientoCovid(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     RECOMENDADORES = (
             (0, 'Medico'),
             (1, 'Familiar'),
@@ -150,12 +171,15 @@ class tratamientoCovid(models.Model):
     nombreMedicamento = models.CharField(max_length=200, blank=True)
     dosis = models.CharField(max_length=200, blank=True)
     frecuencia = models.CharField(max_length=200, blank=True)
-    fechaInicio = models.DateField(blank=True)
-    fechaTermino = models.DateField(blank=True)
+    fechaInicio = models.DateField(blank=True, null=True)
+    fechaTermino = models.DateField(blank=True, null=True)
     ruta = models.CharField(max_length=15, choices=RUTAS, blank=True)
 
 
 class antecedentesEpidimiologicos(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='antecedentes', blank=True)
     contactoCovid = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -165,6 +189,9 @@ class antecedentesEpidimiologicos(models.Model):
 
 
 class pruebas(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
     PRUEBAS = (
             (0, 'RT-PCR'),
             (1, 'Prueba Rapida')
@@ -176,7 +203,7 @@ class pruebas(models.Model):
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='pruebas')
     pruebas = models.CharField(max_length=10, choices=SiNo, blank=True)
-    fechaSintomas = models.DateField(blank=True)
+    fechaSintomas = models.DateField(blank=True, null=True)
     resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
     igg = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
     igm = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
