@@ -1,0 +1,25 @@
+<div class="vertical-nav bg-white" id="sidebar">
+    <div class="py-4 px-3 mb-4 bg-lightBlue">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'styles.css'%}">
+        <div class="media d-flex align-items-center"><img src="{% static 'imgs/logo-4.svg'%}" alt="..." width="150em" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+            <div class="media-body">
+                <a class="nav-link text-dark" href="#">
+                    <h4 class="m-0"> SARS-COV-OBS-MX-03</h4>
+                    <p class="font-weight-light text-muted mb-0">Cuestionario</p>
+                </a>
+            </div>
+              <a class="navbar-brand nav-link text-dark" href="#">Iniciar Sesion</a>
+              <a class="navbar-brand nav-link text-dark cerrar-session" href="#">Cerrar Sesion</a>
+        </div>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-1">
+                    <a class="nav-item text-dark " href="{% url 'home'%}">Inicio</a>
+                </div>
+                 <div class="col-sm-2">
+                    <a id='nuevo' class="nav-item text-dark" href="{% url 'nuevo'%}">Nuevo Paciente</a>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+/*Pallet*/
+:root{
+    --bgSecundary: rgba(119, 150, 255, 0.5);
+    --bgLink : #a0b7db;
+    --bgPrimary :white;
+}
+
+.bg-lightBlue{
+    background: var(--bgSecundary);
+}
+
+
+ a:focus, a:hover {
+    background: var(--bgLink);
+    padding: 5px;
+    text-decoration: none
+}
+
+
+/*Patient list elements, child a of ul*/
+ ul a.text-dark:focus, ul a.text-dark:hover {
+    background: white ;
+    padding: 5px;
+    text-decoration: none
+}
+
+/*Hidding cerrar cession until logged in*/
+.cerrar-session{
+    display: none;
+}
+
+.seccions{
+    background: rgba(119, 150, 255, 0.5);
+    padding: 5px;
+}
+
+/*Makin stikin header for patients questionnair */
+
+.float {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+#floating-header{
+    display: block;
+    z-index: 99;
+    width: 105%;
+    background:var(--bgPrimary);
+    padding: 1em;
+}
+.float + .content {
+  padding-top: 60px;
+}
+.float-button{
+        right:1vw;
+        top:20vw;
+}

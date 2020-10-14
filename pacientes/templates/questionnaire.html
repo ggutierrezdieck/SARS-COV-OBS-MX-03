@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='row'>
+    <div class='col-sm-1'></div>
+    <div class='col-sm-10'>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class='row float' id='floating-header'>  
+                <div class='row'>
+                    <h1> Questionario</h1>
+                </div>
+                <div class='row justify-content-between'>   
+                    <div class="col-sm-6">
+                        <h2>Paciente {{id}}</h2>
+                    </div> 
+                    <div class="col-sm-1">
+                        <input type="submit" value="Guardar" class='justify-content-end float-button'>
+                    </div>
+                </div>
+                <div class='row justify-content-end'>
+                   
+                </div> 
+            </div>
+            <input type="hidden" name="paciente" value="{{id}}">
+            {{fcuestionario.as_table}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div></div>
+            {{fembarazo.as_table}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div></div>
+            {{fviajes.as_table}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div></div>
+            {{fmorbilidad.as_table}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div></div>
+            {{fhabitos.as_table}}
+            <h1>Datos relacionados a la prueba SARS-COV-2</h1>
+             <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div></div>
+            {{fsintomas.as_table}}
+             <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div></div>
+            {{ftrataminto.as_table}}
+             <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Atntecenentes Epidemiológicos</h2></div></div>
+            {{fanteceddentes.as_table}}
+             <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Pruega SARS-COV-2</h2></div></div>
+            {{fpruebas.as_table}}
+            {% if messages %}
+            {% for message in messages %}
+            <p> message </p>
+            {% endfor %}
+            {% endif %}
+
+
+        </form>
+    </div>  
+    <div class='col-sm-1'></div> 
+</div>
+
+{% endblock %}
