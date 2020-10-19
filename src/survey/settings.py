@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pacientes',
     'django_countries',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('pacientes/static'),)
 django_heroku.settings(locals())
+
+# Crispy tables
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
