@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 
 {% block content %}
 <div class='row'>
@@ -14,7 +16,7 @@
                     <div class="col-sm-6">
                         <h2>Paciente {{id}}</h2>
                     </div> 
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <input type="submit" value="Guardar" class='justify-content-end float-button'>
                     </div>
                 </div>
@@ -23,32 +25,32 @@
                 </div> 
             </div>
             <input type="hidden" name="paciente" value="{{id}}">
-            {{fcuestionario.as_table}}
+            {{fcuestionario|crispy}}
             <div class='row'>
                 <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div></div>
-            {{fembarazo.as_table}}
+            {{fembarazo|crispy}}
             <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div></div>
-            {{fviajes.as_table}}
+            {{fviajes|crispy}}
             <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div></div>
-            {{fmorbilidad.as_table}}
+            {{fmorbilidad|crispy}}
             <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div></div>
-            {{fhabitos.as_table}}
+            {{fhabitos|crispy}}
             <h1>Datos relacionados a la prueba SARS-COV-2</h1>
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div></div>
-            {{fsintomas.as_table}}
+            {{fsintomas|crispy}}
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div></div>
-            {{ftrataminto.as_table}}
+            {{ftrataminto|crispy}}
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Atntecenentes Epidemiológicos</h2></div></div>
-            {{fanteceddentes.as_table}}
+            {{fanteceddentes|crispy}}
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Pruega SARS-COV-2</h2></div></div>
-            {{fpruebas.as_table}}
+            {{fpruebas|crispy}}
             {% if messages %}
             {% for message in messages %}
             <p> message </p>

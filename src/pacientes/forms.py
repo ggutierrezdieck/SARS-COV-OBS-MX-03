@@ -7,9 +7,7 @@ from .models import (paciente, cuestionario, embarazo, viajes, morbilidad,
 class pacienteForm(forms.ModelForm):
     class Meta:
         model = paciente
-        fields = ['id', 'fechaNacimiento', 'sexo',
-                  'escolaridad', 'etnicidad', 'nacionalidad', 'calle', 
-                  'colonia', 'estado', 'cp', 'telefono', 'ocupacion']
+        fields = '__all__'
         widgets = {
                     'fechaNacimiento': forms.DateInput(
                                                         format=('%d-%m-%Y'),
