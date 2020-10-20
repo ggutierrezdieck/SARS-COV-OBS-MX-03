@@ -207,3 +207,31 @@ class pruebas(models.Model):
     resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
     igg = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
     igm = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
+
+
+class seguimiento(models.Model):
+    def __str__(self):
+        return 'Paciente' + str(self.id)
+
+    EVOLUCION = (
+        ('T', 'En tratamiento'),
+        ('H', 'Hospitalizado'),
+        ('D', 'Defuncion'),
+        ('S', 'Seguimiento domicilario'),
+        ('R', 'Recuperado'),
+    )
+    INTENCIDAD = (
+        ('A', 'Asintomatico'),
+        ('M', 'Moderado'),
+        ('L', 'Leve'),
+        ('S', 'Severo'),
+    )
+    evolucion = models.CharField(max_length=10, choices=EVOLUCION, blank=True)
+    fechaDefuncion = models.DateField(blank=True, null=True)
+    fechaIngresoHospital = models.DateField(blank=True, null=True)
+    fechaEgresoHospital = models.DateField(blank=True, null=True)
+    requiereOxigeno = models.CharField(max_length=10, choices=SiNo, blank=True)
+    requiereVentilacion = models.CharField(max_length=10, choices=SiNo, blank=True)
+    complicacionHospital = models.CharField(max_length=10, choices=SiNo, blank=True)
+    cual = models.CharField(max_length=200, blank=True)
+    intensidad = models.CharField(max_length=10, choices=INTENCIDAD, blank=True)

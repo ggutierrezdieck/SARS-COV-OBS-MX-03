@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% include 'navbar.html'%}
+    <form method="POST" class='form-group'>
+        {% csrf_token %}
+        {{ form }}
+        <button type='submit' class='btn btn-success'>Inicio de sessión</button>
+    </form>
+{% endblock%}

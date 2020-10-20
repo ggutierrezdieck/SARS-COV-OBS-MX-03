@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pacientes',
     'django_countries',
+    'userauth',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,10 @@ ROOT_URLCONF = 'survey.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "pacientes/templates")],
+        'DIRS': [
+                os.path.join(BASE_DIR, "pacientes/templates"),
+                os.path.join(BASE_DIR, "userauth/templates")
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
