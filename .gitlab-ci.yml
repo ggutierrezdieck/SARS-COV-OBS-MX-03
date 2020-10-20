@@ -51,4 +51,4 @@ production:
     - gem install dpl
     - dpl --provider=heroku --app=sars-cov-obs-mx-03 --api-key=$HEROKU_PRODUCTION_API_KEY
   only:
-    - tags
+    - master

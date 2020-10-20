@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pacientes',
     'django_countries',
+    'crispy_forms',
+    'userauth',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +60,10 @@ ROOT_URLCONF = 'survey.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "pacientes/templates")],
+        'DIRS': [
+                os.path.join(BASE_DIR, "pacientes/templates"),
+                os.path.join(BASE_DIR, "userauth/templates")
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,7 +125,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('pacientes/static'),)
+
+# Heroku settings
 django_heroku.settings(locals())
+
+# Crispy settings
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Django auth settings
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login'
