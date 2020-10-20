@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 from .forms import (pacienteForm, cuestionarioForm, embarazoForm, viajesForm,
                     morbilidadForm, habitosSaludablesForm, sintomasCovidForm,
                     tratamientoCovidForm, antecedentesEpidimiologicosForm,
@@ -12,6 +13,7 @@ from .models import (paciente, cuestionario, embarazo, viajes, morbilidad,
 # Create your views here.
 
 
+@login_required
 def index_view(request):
     queryset = paciente.objects.all()
     context = {
@@ -26,6 +28,7 @@ def index_view(request):
     return render(request, 'index.html', context)
 
 
+@login_required
 def questionnaire_view(request, id):
     context = {'id': id}
 
@@ -121,6 +124,7 @@ def questionnaire_view(request, id):
     return render(request, 'questionnaire.html', context)
 
 
+@login_required
 def nuevo_view(request):
     queryset = len(paciente.objects.all()) + 1
     context = {

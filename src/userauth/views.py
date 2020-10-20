@@ -8,12 +8,14 @@ from .forms import CreateUser
 # Create your views here.
 
 # Simple default user creation form
+
 def registerUser(response):
-    if response.method == 'POST':
-        registerForm = CreateUser(response.POST)
-        if registerForm.is_valid():
-            registerForm.save()
-            return redirect(reverse('home'))
-    else:
-        registerForm = CreateUser()
-        return render(response, "session.html", {'form': registerForm})
+    pass
+    # if response.method == 'POST':
+    #     registerForm = CreateUser(response.POST)
+    #     if registerForm.is_valid():
+    #         registerForm.save()
+    #         return redirect(reverse('home'))
+    # else:
+    #     registerForm = CreateUser()
+    #     return render(response, "session.html", {'form': registerForm})

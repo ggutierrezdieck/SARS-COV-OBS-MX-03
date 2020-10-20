@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pacientes.urls')),
     path('session', include('userauth.urls'), name='session'),
+    path('', include('django.contrib.auth.urls')),
 ]
