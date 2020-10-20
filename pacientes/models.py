@@ -244,8 +244,6 @@ class seguimiento(models.Model):
     complicacionHospital = models.CharField(max_length=10, choices=SiNo, blank=True)
     cual = models.CharField(max_length=200, blank=True)
     intensidad = models.CharField(max_length=10, choices=INTENCIDAD, blank=True)
-    igg = models.CharField(max_length=10, choices=RESULTADOS[0:1], blank=True)
-    igm = models.CharField(max_length=10, choices=RESULTADOS[0:1], blank=True)
 
 
 class seguridadSocial(models.Model):
