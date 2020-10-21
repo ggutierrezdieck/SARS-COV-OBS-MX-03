@@ -12,7 +12,22 @@ SiNo = (
 class paciente(models.Model):
 
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
+
+    GENEROS = (
+        ('H', 'Hombre'),
+        ('M', 'Mujer')
+    )
+    fechaNacimiento = models.DateField(verbose_name='Fecha de Nacimiento')
+    sexo = models.CharField(max_length=120, choices=GENEROS)
+    nacionalidad = CountryField()
+    fechaIngresoDeExtrangero = models.DateField(blank=True, null=True, verbose_name='Fecha de ingreso a México')
+
+
+class datosGralPaciente(models.Model):
+
+    def __str__(self):
+        return 'Paciente ' + str(self.id)
 
     ESCOLARIDADES = (
         ('N', 'Ninguna'),
@@ -23,115 +38,110 @@ class paciente(models.Model):
         ('M', 'Maestría'),
         ('D', 'Doctorado')
     )
-    GENEROS = (
-        ('H', 'Hombre'),
-        ('M', 'Mujer')
-    )
     ETNIAS = (
-        ('I', 'Indio Americano / Nativo de Alasca'),
+        ('I', 'Indio Americano / Nativo de Alaska'),
         ('N', 'Negro / Afroamericano'),
-        ('M', 'Mexicano/Americano'),
+        ('M', 'Mexicano / Americano'),
         ('B', 'Blanco'),
         ('A', 'Asiático'),
-        ('P', 'Isleño del Pacífico / Hawaiano'),
+        ('P', 'Isleño del Pacífico / Hawaiano Nativo'),
         ('O', 'Otro'),
         ('NS', 'No lo sé'),
         )
     EDOCIVIL = (
         ('S', 'Soltero'),
         ('C', 'Casado'),
-        ('D', 'Divorsiado'),
+        ('D', 'Divorciado'),
         ('V', 'Viudo')
         )
     LABORAL = (
         ('M', 'Empleo de medio tiempo'),
         ('C', 'Empleo de tiempo completo'),
-        ('D', 'Desempleo'),
-        ('M', 'Empleo de medio tiempo'),
+        ('D', 'Desempleado'),
         ('I', 'Trabaja por cuenta propia'),
         ('E', 'Estudiante'),
         ('R', 'Retirado')
         )
-    fechaNacimiento = models.DateField(verbose_name='Fecha de Nacimiento')
-    sexo = models.CharField(max_length=120, choices=GENEROS)
-    escolaridad = models.CharField(max_length=120, choices=ESCOLARIDADES, blank=True)
-    etnicidad = models.CharField(max_length=120, blank=True, choices=ETNIAS)
-    nacionalidad = CountryField()
-    fechaIngresoDeExtrangero = models.DateField(verbose_name='Fecha de ingreso a México')
+    paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
+                                    related_name='generales')
+    etnicidad = models.CharField(max_length=120, blank=True, choices=ETNIAS, verbose_name='Raza / Etina')
+    escolaridad = models.CharField(max_length=120, choices=ESCOLARIDADES, blank=True, verbose_name='Escolaridad (última terminada)')
+    estadoCivil = models.CharField(max_length=120, blank=True, choices=EDOCIVIL, verbose_name='Estado Civil')
+    situacionLaboral = models.CharField(max_length=120, blank=True, choices=LABORAL, verbose_name='Situación laboral actual')
+    ocupacion = models.CharField(max_length=120, blank=True,  verbose_name='Ocupación')
+    lugarTrabajo = models.CharField(max_length=120, blank=True, verbose_name='Lugar de trabajo')
+
     # calle = models.CharField(max_length=120, blank=True)
     # colonia = models.CharField(max_length=120, blank=True)
-    estado = models.CharField(max_length=120, blank=True)
+    # estado = models.CharField(max_length=120, blank=True)
     # cp = models.CharField(max_length=120, blank=True)
     # telefono = models.CharField(max_length=120, blank=True)
-    ocupacion = models.CharField(max_length=120, blank=True)
-    estadoCivil = models.CharField(max_length=120, blank=True, choices=EDOCIVIL)
-    situacionLaboral = models.CharField(max_length=120, blank=True, choices=LABORAL)
-    ocupacion = models.CharField(max_length=120, blank=True)
-    lugarTrabajo = models.CharField(max_length=120, blank=True)
 
 
 class cuestionario(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
-                                    related_name='cuestioarios')
+                                    related_name='cuestionarios')
     folio = models.IntegerField(blank=True, null=True)
-    fechaCuestioario = models.DateField(null=True)
+    fechaCuestionario = models.DateField(null=True, verbose_name='Fecha del cuestionario')
 
 
 class embarazo(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='embarazos')
-    embarazo = models.CharField(max_length=10, choices=SiNo, blank=True)
+    embarazo = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Está embarazada?')
     numerodeMeses = models.IntegerField(validators=[MinValueValidator(0),
-                                        MaxValueValidator(9)], blank=True, null=True)
-    postparto = models.CharField(max_length=10, choices=SiNo, blank=True)
-    mesesPostparto = models.IntegerField(validators=[MinValueValidator(0),
-                                        MaxValueValidator(9)], blank=True, null=True)
+                                        MaxValueValidator(10)], blank=True, null=True, verbose_name='Meses de embarazo')
+    postparto = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Se encuentra en periodo de posparto?')
+    mesesPostparto = models.IntegerField(blank=True, null=True, verbose_name='Meses desde el parto')
+
 
 class viajes(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='viajes', blank=True)
-    salioDelPais = models.CharField(max_length=10, choices=SiNo, blank=True)
-    paicesVisitados = models.CharField(max_length=500, blank=True)
-    fechaRegreso = models.DateField(verbose_name='Fecha de regreso a México',
+    salioDelPais = models.CharField(max_length=10, choices=SiNo, blank=True,
+                                    verbose_name='¿Realizó viajes al extrangjero en los últimos 3 meses?')
+    paicesVisitados = models.CharField(max_length=500, blank=True, verbose_name='En caso de ser sí su respuesta anterior, ¿qué países visitó?')
+    fechaRegreso = models.DateField(verbose_name='¿En que fecha ingresó a México?',
                                     null=True, blank=True)
 
 class sintomasCovid(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='sintomas')
     fiebre = models.CharField(max_length=10, choices=SiNo, blank=True)
     tos = models.CharField(max_length=10, choices=SiNo, blank=True)
-    dolorArticular = models.CharField(max_length=10, choices=SiNo, blank=True)
-    dolorCabeza = models.CharField(max_length=10, choices=SiNo, blank=True)
-    dolorToracico = models.CharField(max_length=10, choices=SiNo, blank=True)
+    dolorArticular = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Dolor articular')
+    dolorCabeza = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Dolor de cabeza')
+    dolorToracico = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Dolor torácico')
     conjuntivitis = models.CharField(max_length=10, choices=SiNo, blank=True)
-    dolorGarganta = models.CharField(max_length=10, choices=SiNo, blank=True)
+    dolorGarganta = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Dolor de garganta al tragar')
     # dolorAbdominal = models.CharField(max_length=10, choices=SiNo, blank=True)
     debilidad = models.CharField(max_length=10, choices=SiNo, blank=True)
-    vomito = models.CharField(max_length=10, choices=SiNo, blank=True)
-    malestarGeneral = models.CharField(max_length=10, choices=SiNo, blank=True)
-    dificltadRespirar = models.CharField(max_length=10, choices=SiNo, blank=True)
-    perdidaGusto = models.CharField(max_length=10, choices=SiNo, blank=True)
-    perdidaOlfato = models.CharField(max_length=10, choices=SiNo, blank=True)
-    secrecionNasal = models.CharField(max_length=10, choices=SiNo, blank=True)
-    otras = models.CharField(max_length=10, choices=SiNo, blank=True)
+    vomito = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Vómito')
+    malestarGeneral = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Malestar general')
+    dificltadRespirar = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Dificultad para respirar')
+    perdidaGusto = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Pérdida del sentido del gusto')
+    perdidaOlfato = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Pérdida del sentido del olfato')
+    secrecionNasal = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Secreción nasal')
+    otro = models.CharField(max_length=10, choices=SiNo, blank=True)
     irritabilidad = models.CharField(max_length=10, choices=SiNo, blank=True)
-    escalofrios = models.CharField(max_length=10, choices=SiNo, blank=True)
+    escalofrios = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Escalofríos')
 
-    cuantos = models.IntegerField(blank=True, null=True)
+    cuantos = models.IntegerField(blank=True, null=True, verbose_name='¿Cuántos de estos sintomas ha presentado?')
     # cuales = models.CharField(max_length=300, blank=True)
-    # mejoriaSintomas = models.CharField(max_length=10, choices=SiNo, blank=True)
+    mejoria = models.CharField(max_length=10, choices=SiNo, blank=True,
+                               verbose_name='¿Ha tenido mejoría en la presentación de los signos o síntomas?')
     fechaSintomas = models.DateField(verbose_name='Fecha de inicio de síntomas',
                                      null=True, blank=True)
     # sochechaCovid19 = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -139,16 +149,19 @@ class sintomasCovid(models.Model):
 
 class tratamientoCovid(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
-    RECOMENDADORES = (
-            (0, 'Medico'),
-            (1, 'Familiar'),
-            (2, 'Vecino'),
-            (3, 'Amigo'),
-            (4, 'Automedicación'),
-            (5, 'Otro'),
-        )
+    paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
+                                 related_name='tratamientos')
+    tratamiento = models.CharField(max_length=10, choices=SiNo, blank=True,
+                                   verbose_name='¿Desde el inicio de los signos/síntomas ha tomado algún tratamiento?')
+    # quien = models.CharField(max_length=200, blank=True)
+
+
+class medicamento(models.Model):
+    def __str__(self):
+        return 'Paciente ' + str(self.id)
+
     RUTAS = (
             ('OR', 'Oral'),
             ('IV', 'Intravenosa'),
@@ -163,23 +176,30 @@ class tratamientoCovid(models.Model):
         ('4', 'Esteroideo'),
         ('5', 'Otro')
         )
+    RECOMENDADORES = (
+            (0, 'Medico'),
+            (1, 'Familiar'),
+            (2, 'Vecino'),
+            (3, 'Amigo'),
+            (4, 'Automedicación'),
+            (5, 'Otro'),
+        )
+
     paciente = models.ForeignKey(paciente, on_delete=models.CASCADE,
-                                 related_name='tratamientos')
-    tratamiento = models.CharField(max_length=10, choices=SiNo, blank=True)
-    nombreMedicamento = models.CharField(max_length=200, blank=True)
+                                 related_name='medicamento')
+    nombreMedicamento = models.CharField(max_length=200, blank=True, verbose_name='Nombre del medicamento')
     tipo = models.CharField(max_length=200, blank=True, choices=TIPO)
-    fechaInicio = models.DateField(blank=True, null=True)
+    fechaInicio = models.DateField(blank=True, null=True, verbose_name='Fecha de inicio')
     dosis = models.CharField(max_length=200, blank=True)
     frecuencia = models.CharField(max_length=200, blank=True)
-    ruta = models.CharField(max_length=15, choices=RUTAS, blank=True)
-    fechaTermino = models.DateField(blank=True, null=True)
-    quienIndico = models.CharField(max_length=15, choices=RECOMENDADORES, blank=True)
-    quien = models.CharField(max_length=200, blank=True)
+    ruta = models.CharField(max_length=15, choices=RUTAS, blank=True, verbose_name='Ruta de administración')
+    fechaTermino = models.DateField(blank=True, null=True, verbose_name='Fecha de fin')
+    quienIndico = models.CharField(max_length=15, choices=RECOMENDADORES, blank=True, verbose_name='¿Quién indicó el tratamiento?')
 
 
 class antecedentesEpidimiologicos(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
     RELACION = (
         (0, 'Familiar'),
         (1, 'Amigo'),
@@ -189,16 +209,17 @@ class antecedentesEpidimiologicos(models.Model):
     )
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='antecedentes', blank=True)
-    contactoCovid = models.CharField(max_length=10, choices=SiNo, blank=True)
-    relacion = models.CharField(max_length=100, blank=True)
-    quien = models.CharField(max_length=100, blank=True)
-    viaje = models.CharField(max_length=10, choices=SiNo, blank=True)
-    pais = CountryField()
+    contactoCovid = models.CharField(max_length=10, choices=SiNo, blank=True,
+                                     verbose_name='¿Ha tenido contacto con alguna persona que tenga COVID-19 en las dos últimas semanas?')
+    relacion = models.CharField(max_length=100, blank=True, verbose_name='¿Cuál es su relación con esta(s) persona(s)?')
+    # quien = models.CharField(max_length=100, blank=True)
+    viaje = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Realizó algún viaje en las últimas dos semanas?')
+    pais = CountryField(verbose_name='Si su respuesta fue sí, especifique el lugar (país y ciudad)')
 
 
 class pruebas(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     PRUEBAS = (
             (0, 'RT-PCR'),
@@ -211,46 +232,17 @@ class pruebas(models.Model):
         )
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='pruebas')
-    pruebas = models.CharField(max_length=10, choices=SiNo, blank=True)
-    fechaSintomas = models.DateField(blank=True, null=True)
-    resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
-    igg = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
-    igm = models.CharField(max_length=10, choices=RESULTADOS, blank=True)
-
-
-class seguimiento(models.Model):
-    def __str__(self):
-        return 'Paciente' + str(self.id)
-
-    EVOLUCION = (
-        ('T', 'En tratamiento'),
-        ('H', 'Hospitalizado'),
-        ('D', 'Defuncion'),
-        ('S', 'Seguimiento domicilario'),
-        ('R', 'Recuperado'),
-    )
-    INTENCIDAD = (
-        ('A', 'Asintomatico'),
-        ('M', 'Moderado'),
-        ('L', 'Leve'),
-        ('S', 'Severo'),
-    )
-    evolucion = models.CharField(max_length=10, choices=EVOLUCION, blank=True)
-    fechaDefuncion = models.DateField(blank=True, null=True)
-    fechaIngresoHospital = models.DateField(blank=True, null=True)
-    fechaEgresoHospital = models.DateField(blank=True, null=True)
-    requiereOxigeno = models.CharField(max_length=10, choices=SiNo, blank=True)
-    requiereVentilacion = models.CharField(max_length=10, choices=SiNo, blank=True)
-    complicacionHospital = models.CharField(max_length=10, choices=SiNo, blank=True)
-    cual = models.CharField(max_length=200, blank=True)
-    intensidad = models.CharField(max_length=10, choices=INTENCIDAD, blank=True)
-    igg = models.CharField(max_length=10, choices=RESULTADOS[0:1], blank=True)
-    igm = models.CharField(max_length=10, choices=RESULTADOS[0:1], blank=True)
+    pruebas = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Tipo de prueba realizada')
+    fechaInicio = models.DateField(blank=True, null=True, verbose_name='Fecha de inicio')
+    resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (RT-PCR)')
+    resultadoRapida = models.CharField(max_length=10, choices=RESULTADOS[0:2], blank=True, verbose_name='Resultado de la prueba (Rápida)')
+    igg = models.CharField(max_length=10, choices=SiNo, blank=True)
+    igm = models.CharField(max_length=10, choices=SiNo, blank=True)
 
 
 class seguridadSocial(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     SEGURIDAD = (
         ('0', 'IMSS'),
@@ -265,16 +257,16 @@ class seguridadSocial(models.Model):
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='seguridadSocial')
-    seguridad = models.CharField(max_length=10, choices=SEGURIDAD , blank=True)
+    seguridad = models.CharField(max_length=10, choices=SEGURIDAD , blank=True, verbose_name='¿Qúe seguridad social tiene?')
 
 
 class morbilidad(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='morbilidades')
-    morbilidad = models.CharField(max_length=10, choices=SiNo, blank=True)
+    morbilidad = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Presenta alguna morbilidad?')
     diabetes = models.CharField(max_length=10, choices=SiNo, blank=True)
     epoc = models.CharField(max_length=10, choices=SiNo, blank=True)
     obesidad = models.CharField(max_length=10, choices=SiNo, blank=True)
@@ -283,17 +275,16 @@ class morbilidad(models.Model):
     cancer = models.CharField(max_length=10, choices=SiNo, blank=True)
     vih = models.CharField(max_length=10, choices=SiNo, blank=True)
     tuberculosis = models.CharField(max_length=10, choices=SiNo, blank=True)
-    otras = models.CharField(max_length=10, choices=SiNo, blank=True)
     insuficienciRenal = models.CharField(max_length=10, choices=SiNo, blank=True)
     hipertension = models.CharField(max_length=10, choices=SiNo, blank=True)
-    cuales = models.CharField(max_length=500, blank=True)
     trastornoNeurologico = models.CharField(max_length=10, choices=SiNo, blank=True)
     cardiovascular = models.CharField(max_length=10, choices=SiNo, blank=True)
-
+    otras = models.CharField(max_length=10, choices=SiNo, blank=True)
+    cuales = models.CharField(max_length=500, blank=True, verbose_name='¿Cuales?')
 
 class habitosSaludables(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
     ALCOHOL = (
         ('0', 'Ninguna'),
@@ -313,29 +304,63 @@ class habitosSaludables(models.Model):
         ('0.5d', 'Media cajetilla diaria'),
         ('1d', 'Una cajetilla al día')
         )
+    DROGAS = (
+        ('M', 'Marihuana'),
+        ('C', 'Cocaina'),
+        ('Me', 'Mentafetamina'),
+        ('E', 'Éxtasis'),
+        ('H', 'Heroina'),
+        ('O', 'Otro'),
+        )
 
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='habitos')
-    frutas = models.CharField(max_length=10,  blank=True)
-    verduras = models.CharField(max_length=10,  blank=True)
-    pescado = models.CharField(max_length=10,  blank=True)
-    granos = models.CharField(max_length=10,  blank=True)
-    bebidasAzucar = models.IntegerField(blank=True, null=True)
-    sal = models.CharField(max_length=10,  blank=True)
+    frutas = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta fruta come en un día común y corriente?')
+    verduras = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta verdura come en un día común y corriente?')
+    pescado = models.CharField(max_length=10,  blank=True, verbose_name='¿Consume 2 o más porciones de pescado a la semana?')
+    granos = models.CharField(max_length=10,  blank=True, verbose_name='¿Consume 2 o más porciones de pescado a la semana?')
+    bebidasAzucar = models.IntegerField(blank=True, null=True, verbose_name='¿Bebe menos de 1 litro de bebidas azucaradas a la semana?')
+    sal = models.CharField(max_length=10,  blank=True, verbose_name='Actualmente, ¿Está usted moderando o reduciendo su consumo de sal o sodio?')
     # carne = models.CharField(max_length=10,  blank=True)
-    acitivadModerada = models.CharField(max_length=10,  blank=True)
-    acitivadEnergetica = models.CharField(max_length=10,  blank=True)
-    fuma = models.CharField(max_length=10, choices=CIGARRO, blank=True)
-    anosFumando = models.CharField(max_length=10, blank=True)
-    indiceTabaquico = models.CharField(max_length=10, blank=True)
-    alcohol = models.CharField(max_length=10,choices=ALCOHOL, blank=True)
+    acitivadModerada = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta actividad física moderada normalmente realiza semanalmente?')
+    acitivadEnergetica = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta actividad física enérgica/vigorosa realiza semanalmente?')
+    fuma = models.CharField(max_length=10, choices=CIGARRO, blank=True, verbose_name='¿Con qué frecuencia fuma cigarrillos?')
+    freqFumando = models.CharField(max_length=10, blank=True, verbose_name='Tiempo en años')
+    indiceTabaquico = models.CharField(max_length=10, blank=True, verbose_name='Índice tabáquico')
+    anosFumando = models.CharField(max_length=10, blank=True, verbose_name='¿Cuánto tiempo tiene fumando?')
+    alcohol = models.CharField(max_length=10,choices=ALCOHOL, blank=True, verbose_name='En los útimos 30 días ¿Cuántas veces ha tomado por lo menos cinco bebidas alcohólicas seguidas?')
+    drogas = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Ha consumido alguna sustancia nociva como marihuana,cocaína, mentafetamina, éxtasis?')
+    cualddroga = models.CharField(max_length=10, choices=DROGAS, blank=True, verbose_name='Si su respuesta fue sí, especifique ¿Cuál?')
+    otradroga = models.CharField(max_length=10, blank=True, verbose_name='¿Cuál otra droga?')
     # vasosAgua = models.IntegerField(blank=True, null=True)
     # horasSueno = models.CharField(max_length=10, blank=True)
 
 
-class seguimeinto(models.Model):
+class seguimiento(models.Model):
     def __str__(self):
-        return 'Paciente' + str(self.id)
+        return 'Paciente ' + str(self.id)
 
+    EVOLUCION = (
+        ('T', 'En tratamiento'),
+        ('H', 'Hospitalizado'),
+        ('D', 'Defuncion'),
+        ('S', 'Seguimiento domicilario'),
+        ('R', 'Recuperado'),
+    )
+    INTENCIDAD = (
+        ('A', 'Asintomatico'),
+        ('M', 'Moderado'),
+        ('L', 'Leve'),
+        ('S', 'Severo'),
+    )
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
-                                    related_name='seguimeinto')
+                                    related_name='seguimiento')
+    evolucion = models.CharField(max_length=10, choices=EVOLUCION, blank=True, verbose_name='Evolución de la enfermedad')
+    fechaDefuncion = models.DateField(blank=True, null=True, verbose_name='En caso de deunción, fecha de defunción')
+    fechaIngresoHospital = models.DateField(blank=True, null=True, verbose_name='En caso de hospitalización, fecha de ingreso')
+    fechaEgresoHospital = models.DateField(blank=True, null=True, verbose_name='En caso de deunción, fecha de egreso')
+    requiereOxigeno = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Requerimiento de oxígeno')
+    requiereVentilacion = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Requerimiento de ventilación mecánic')
+    complicacionHospital = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Complicaciones hospitalarias')
+    cual = models.CharField(max_length=200, blank=True)
+    intensidad = models.CharField(max_length=10, choices=INTENCIDAD, blank=True)
