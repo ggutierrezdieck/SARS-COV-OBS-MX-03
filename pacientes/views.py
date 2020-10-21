@@ -5,10 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import (pacienteForm, cuestionarioForm, embarazoForm, viajesForm,
                     morbilidadForm, habitosSaludablesForm, sintomasCovidForm,
                     tratamientoCovidForm, antecedentesEpidimiologicosForm,
-                    pruebasForm)
+                    pruebasForm, seguridadSocialForm, datosGralPacienteForm,
+                    medicamentoForm, seguimientoForm)
 from .models import (paciente, cuestionario, embarazo, viajes, morbilidad,
                      habitosSaludables, sintomasCovid, tratamientoCovid,
-                     antecedentesEpidimiologicos, pruebas)
+                     antecedentesEpidimiologicos, pruebas, seguridadSocial,
+                     datosGralPaciente, medicamento, seguimiento)
 
 # Create your views here.
 
@@ -33,6 +35,10 @@ def questionnaire_view(request, id):
     context = {'id': id}
 
     # Getting inctances for the requested id
+    try:
+        dgp = datosGralPaciente.objects.get(paciente=id)
+    except ObjectDoesNotExist:
+        dgp = None
     try:
         cue = cuestionario.objects.get(paciente=id)
     except ObjectDoesNotExist:
@@ -62,6 +68,10 @@ def questionnaire_view(request, id):
     except ObjectDoesNotExist:
         tra = None
     try:
+        med = medicamento.objects.get(paciente=id)
+    except ObjectDoesNotExist:
+        med = None
+    try:
         ant = antecedentesEpidimiologicos.objects.get(paciente=id)
     except ObjectDoesNotExist:
         ant = None
@@ -69,8 +79,17 @@ def questionnaire_view(request, id):
         pru = pruebas.objects.get(paciente=id)
     except ObjectDoesNotExist:
         pru = None
+    try:
+        sso = seguridadSocial.objects.get(paciente=id)
+    except ObjectDoesNotExist:
+        sso = None
+    try:
+        seg = seguimiento.objects.get(paciente=id)
+    except ObjectDoesNotExist:
+        seg = None
 
     # Createing questionairs with intances created above
+    fgeneales = datosGralPacienteForm(instance=dgp)
     fcuestionario = cuestionarioForm(instance=cue)
     fembarazo = embarazoForm(instance=emb)
     fviajes = viajesForm(instance=via)
@@ -78,10 +97,14 @@ def questionnaire_view(request, id):
     fhabitos = habitosSaludablesForm(instance=hab)
     fsintomas = sintomasCovidForm(instance=sin)
     ftrataminto = tratamientoCovidForm(instance=tra)
+    fmedicamento = medicamentoForm(instance=med)
     fanteceddentes = antecedentesEpidimiologicosForm(instance=ant)
     fpruebas = pruebasForm(instance=pru)
+    fseguridad = seguridadSocialForm(instance=sso)
+    fseguimiento = seguimientoForm(instance=seg)
 
     if request.method == 'POST':
+        fgeneales = datosGralPacienteForm(request.POST, instance=dgp)
         fcuestionario = cuestionarioForm(request.POST, instance=cue)
         fembarazo = embarazoForm(request.POST, instance=emb)
         fviajes = viajesForm(request.POST, instance=via)
@@ -89,11 +112,15 @@ def questionnaire_view(request, id):
         fhabitos = habitosSaludablesForm(request.POST, instance=hab)
         fsintomas = sintomasCovidForm(request.POST, instance=sin)
         ftrataminto = tratamientoCovidForm(request.POST, instance=tra)
+        fmedicamento = medicamentoForm(request.POST, instance=med)
         fanteceddentes = antecedentesEpidimiologicosForm(request.POST, instance=ant)
         fpruebas = pruebasForm(request.POST, instance=pru)
+        fseguridad = seguridadSocialForm(request.POST, instance=sso)
+        fseguimiento = seguimientoForm(request.POST, instance=seg)
 
-        forms = [fcuestionario, fembarazo, fviajes, fmorbilidad, fhabitos,
-                 fsintomas, ftrataminto, fanteceddentes, fpruebas]
+        forms = [fgeneales, fcuestionario, fembarazo, fviajes, fmorbilidad,
+                 fhabitos, fsintomas, ftrataminto, fmedicamento, fanteceddentes,
+                 fpruebas, fseguridad,fseguimiento]
         valid_forms = 0
         print(forms)
         for form in forms:
@@ -111,6 +138,7 @@ def questionnaire_view(request, id):
                 print('One form is not valid')
 
     else:
+        context['fgeneales'] = fgeneales
         context['fcuestionario'] = fcuestionario
         context['fembarazo'] = fembarazo
         context['fviajes'] = fviajes
@@ -118,8 +146,11 @@ def questionnaire_view(request, id):
         context['fhabitos'] = fhabitos
         context['fsintomas'] = fsintomas
         context['ftrataminto'] = ftrataminto
+        context['fmedicamento'] = fmedicamento
         context['fanteceddentes'] = fanteceddentes
         context['fpruebas'] = fpruebas
+        context['fseguridad'] = fseguridad
+        context['fseguimiento'] = fseguimiento
 
     return render(request, 'questionnaire.html', context)
 

@@ -10,14 +10,14 @@
             {% csrf_token %}
             <div class='row float' id='floating-header'>  
                 <div class='row'>
-                    <h1> Questionario</h1>
+                    <h1> Cuestionario</h1>
                 </div>
                 <div class='row justify-content-between'>   
                     <div class="col-sm-6">
                         <h2>Paciente {{id}}</h2>
                     </div> 
                     <div class="col-sm-2">
-                        <input type="submit" value="Guardar" class='justify-content-end float-button'>
+                        <input type="submit" value="Guardar" class='justify-content-end float-button btn btn-secondary'>
                     </div>
                 </div>
                 <div class='row justify-content-end'>
@@ -26,31 +26,54 @@
             </div>
             <input type="hidden" name="paciente" value="{{id}}">
             {{fcuestionario|crispy}}
+             <div class='row'>
+                <div class=' col-sm-12'><h2 class='seccions'>Datos generales</h2></div>
+            </div>
+            {{fgeneales|crispy}}
             <div class='row'>
-                <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div></div>
+                <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div>
+            </div>
             {{fembarazo|crispy}}
             <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div></div>
+                <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div>
+            </div>
             {{fviajes|crispy}}
-            <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div></div>
-            {{fmorbilidad|crispy}}
-            <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div></div>
-            {{fhabitos|crispy}}
+
             <h1>Datos relacionados a la prueba SARS-COV-2</h1>
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div></div>
+                <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div>
+            </div>
             {{fsintomas|crispy}}
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div></div>
-            {{ftrataminto|crispy}}
+                <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div>
+            </div>
+            <div id='medicamento'>
+                {{fmedicamento|crispy}}
+            </div>
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Atntecenentes Epidemiológicos</h2></div></div>
+                <div class=' col-sm-12'><h2  class='seccions'>Antecedentes Epidemiológicos</h2></div>
+            </div>
             {{fanteceddentes|crispy}}
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Pruega SARS-COV-2</h2></div></div>
+                <div class=' col-sm-12'><h2  class='seccions'>Prueba SARS-COV-2</h2></div>
+            </div>
             {{fpruebas|crispy}}
+             <h1>Seguridad Social</h1>
+            {{fseguridad|crispy}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div>
+            </div>
+            {{fmorbilidad|crispy}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div>
+            </div>
+            {{fhabitos|crispy}}
+
+             <div class='row'>
+                <div class=' col-sm-12'><h1  class='seccions'>Seguimiento (para sujetos que dieron positivos a la prueba)</h1></div>
+            </div>
+            {{fseguimiento|crispy}}
+
             {% if messages %}
             {% for message in messages %}
             <p> message </p>
