@@ -10,6 +10,16 @@ $(document).ready(function() {
             if (this.readyState == 4 && this.status == 200) {
               document.getElementById("content").innerHTML =
               this.responseText;
+              // Coning , and clearing medicamento form, when new medicamento is added to allow multiple inputs
+              $('#addMed').click(function(){
+                $("<br><hr><br>").insertBefore("#beforeMedicamento");
+                let clone = $("#medicamento").clone()
+                // Clearing input values in cloned item
+                clone.find('input[type=text]').val('');
+                clone.find('input[type=date]').val('');
+                //inserting before medicamenteo
+                clone.insertBefore("#beforeMedicamento");
+              });
           }
       };
       request.open('GET', 'q/' + id , false);

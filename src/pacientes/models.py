@@ -159,8 +159,10 @@ class tratamientoCovid(models.Model):
 
 
 class medicamento(models.Model):
+    #####
+    # If this model changes, ensure to change it on the view to handle the post request
     def __str__(self):
-        return 'Paciente ' + str(self.id)
+        return 'Paciente ' + str(self.paciente.id) + ' medicamento ' + str(self.id)
 
     RUTAS = (
             ('OR', 'Oral'),
@@ -214,7 +216,7 @@ class antecedentesEpidimiologicos(models.Model):
     relacion = models.CharField(max_length=100, blank=True, verbose_name='¿Cuál es su relación con esta(s) persona(s)?')
     # quien = models.CharField(max_length=100, blank=True)
     viaje = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Realizó algún viaje en las últimas dos semanas?')
-    pais = CountryField(verbose_name='Si su respuesta fue sí, especifique el lugar (país y ciudad)')
+    pais = CountryField(verbose_name='Si su respuesta fue sí, especifique el lugar (país y ciudad)', blank=True, null=True)
 
 
 class pruebas(models.Model):
@@ -233,7 +235,7 @@ class pruebas(models.Model):
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='pruebas')
     pruebas = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Tipo de prueba realizada')
-    fechaInicio = models.DateField(blank=True, null=True, verbose_name='Fecha de inicio')
+    fechaInicioPruebas = models.DateField(blank=True, null=True, verbose_name='Fecha de inicio')
     resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (RT-PCR)')
     resultadoRapida = models.CharField(max_length=10, choices=RESULTADOS[0:2], blank=True, verbose_name='Resultado de la prueba (Rápida)')
     igg = models.CharField(max_length=10, choices=SiNo, blank=True)
