@@ -47,9 +47,23 @@
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div>
             </div>
-            <div id='medicamento'>
-                {{fmedicamento|crispy}}
+                {% for key, value in fmedicamento.items %}
+                    <div id='medicamento'>  
+                        {% if not forloop.first %}
+                            <br><hr><br>
+                        {% endif %}
+                        {{value|crispy}}
+                    </div>
+                {% empty %}
+                    <div id='medicamento'>
+                        {{fmedicamento|crispy}}
+                    </div>
+                {% endfor%}
+
+            <div  id='beforeMedicamento' class='row justify-content-end' style="padding: 0.5em 1em;">
+                <button id='addMed' class='btn btn-primary btn-sm' type="button">Agregar otro medicamento</button>
             </div>
+
              <div class='row'>
                 <div class=' col-sm-12'><h2  class='seccions'>Antecedentes Epidemiológicos</h2></div>
             </div>

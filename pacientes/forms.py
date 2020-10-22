@@ -115,6 +115,7 @@ class medicamentoForm(forms.ModelForm):
                                                                 }),
                     }
 
+
 class antecedentesEpidimiologicosForm(forms.ModelForm):
     class Meta:
         model = antecedentesEpidimiologicos
