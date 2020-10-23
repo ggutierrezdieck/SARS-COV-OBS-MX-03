@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 
 {% block content %}
 <div class='row'>
@@ -8,14 +10,14 @@
             {% csrf_token %}
             <div class='row float' id='floating-header'>  
                 <div class='row'>
-                    <h1> Questionario</h1>
+                    <h1> Cuestionario</h1>
                 </div>
                 <div class='row justify-content-between'>   
                     <div class="col-sm-6">
                         <h2>Paciente {{id}}</h2>
                     </div> 
-                    <div class="col-sm-1">
-                        <input type="submit" value="Guardar" class='justify-content-end float-button'>
+                    <div class="col-sm-2">
+                        <input type="submit" value="Guardar" class='justify-content-end float-button btn btn-secondary'>
                     </div>
                 </div>
                 <div class='row justify-content-end'>
@@ -23,32 +25,77 @@
                 </div> 
             </div>
             <input type="hidden" name="paciente" value="{{id}}">
-            {{fcuestionario.as_table}}
+            {{fcuestionario|crispy}}
+             <div class='row'>
+                <div class=' col-sm-12'><h2 class='seccions'>Datos generales</h2></div>
+            </div>
+            {{fgeneales|crispy}}
             <div class='row'>
-                <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div></div>
-            {{fembarazo.as_table}}
+                <div class=' col-sm-12'><h2 class='seccions'>En caso de ser Mujer</h2></div>
+            </div>
+            {{fembarazo|crispy}}
             <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div></div>
-            {{fviajes.as_table}}
-            <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div></div>
-            {{fmorbilidad.as_table}}
-            <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div></div>
-            {{fhabitos.as_table}}
+                <div class=' col-sm-12'><h2  class='seccions'>Viajes Recientes</h2></div>
+            </div>
+            {{fviajes|crispy}}
+
             <h1>Datos relacionados a la prueba SARS-COV-2</h1>
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div></div>
-            {{fsintomas.as_table}}
+                <div class=' col-sm-12'><h2  class='seccions'>Sintomas</h2></div>
+            </div>
+            {{fsintomas|crispy}}
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div></div>
-            {{ftrataminto.as_table}}
+                <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div>
+            </div>
+                {% for key, value in fmedicamento.items %}
+                    <div id='medicamento'>
+                        {% if not forloop.first %}
+                            <hr>
+                        {% endif %}
+                         <div class='row justify-content-end'>
+                            <i class="fas fa-times-circle"  style="padding: 0 2em 0 0;"></i>  
+                        </div>
+                        {% crispy value %}
+                        {# {{value|crispy}} #}
+                    </div>
+                {% empty %}
+                    <div id='medicamento'>
+                        <div class='row justify-content-end'>
+                            <i class="fas fa-times-circle" style="padding: 0 2em 0 0;"></i>  
+                        </div>
+                        {% crispy fmedicamento %}
+                        {# {{fmedicamento|crispy }} #}
+                    </div>
+                {% endfor%}
+
+            <div  id='beforeMedicamento' class='row justify-content-end' style="padding: 0.5em 1em;">
+                <button id='addMed' class='btn btn-primary btn-sm' type="button">Agregar otro medicamento</button>
+            </div>
+
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Atntecenentes Epidemiológicos</h2></div></div>
-            {{fanteceddentes.as_table}}
+                <div class=' col-sm-12'><h2  class='seccions'>Antecedentes Epidemiológicos</h2></div>
+            </div>
+            {{fanteceddentes|crispy}}
              <div class='row'>
-                <div class=' col-sm-12'><h2  class='seccions'>Pruega SARS-COV-2</h2></div></div>
-            {{fpruebas.as_table}}
+                <div class=' col-sm-12'><h2  class='seccions'>Prueba SARS-COV-2</h2></div>
+            </div>
+            {{fpruebas|crispy}}
+             <h1>Seguridad Social</h1>
+            {{fseguridad|crispy}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Morbilidad</h2></div>
+            </div>
+            {{fmorbilidad|crispy}}
+            <div class='row'>
+                <div class=' col-sm-12'><h2  class='seccions'>Hábitos Saludables</h2></div>
+            </div>
+            {{fhabitos|crispy}}
+
+             <div class='row'>
+                <div class=' col-sm-12'><h1  class='seccions'>Seguimiento (para sujetos que dieron positivos a la prueba)</h1></div>
+            </div>
+            {{fseguimiento|crispy}}
+
             {% if messages %}
             {% for message in messages %}
             <p> message </p>
