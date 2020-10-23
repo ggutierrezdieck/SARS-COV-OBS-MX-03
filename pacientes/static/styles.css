@@ -16,6 +16,9 @@
     text-decoration: none
 }
 
+hr {
+   border-top: 3px solid var(--bgSecundary)
+}
 
 /*Patient list elements, child a of ul*/
  ul a.text-dark:focus, ul a.text-dark:hover {
@@ -56,3 +59,4 @@
         right:1vw;
         top:20vw;
 }
+/*Media Qieres for smaller dev*/

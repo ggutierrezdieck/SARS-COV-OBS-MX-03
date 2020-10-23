@@ -3,6 +3,8 @@ from .models import (paciente, cuestionario, embarazo, viajes, morbilidad,
                      habitosSaludables, sintomasCovid, tratamientoCovid,
                      antecedentesEpidimiologicos, pruebas, seguridadSocial,
                      seguimiento, datosGralPaciente, medicamento)
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Row, Column, HTML
 
 
 class pacienteForm(forms.ModelForm):
@@ -36,6 +38,7 @@ class datosGralPacienteForm(forms.ModelForm):
                                                                 'class': 'date_picker',
                                                                 }),
                   }
+
 
 class cuestionarioForm(forms.ModelForm):
     class Meta:
@@ -114,6 +117,29 @@ class medicamentoForm(forms.ModelForm):
                                                                 'type': 'date',
                                                                 }),
                     }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.disable_csrf = True
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Fieldset(
+                '',  # This field is a leyend for the set, empty for this specific form
+                Row(
+                     Column('nombreMedicamento', css_class="col-3"),
+                     Column(HTML("""<br>"""), 'tipo', css_class="col-3"),
+                     Column(HTML("""<br>"""), 'fechaInicio', css_class="col-3"),
+                     Column(HTML("""<br>"""), 'dosis', css_class="col-3"),
+                     ),
+                Row(
+                     Column(HTML("""<br>"""), 'frecuencia', css_class="col-3"),
+                     Column(HTML("""<br>"""), 'ruta', css_class="col-3"),
+                     Column(HTML("""<br>"""), 'fechaTermino', css_class="col-3"),
+                     Column('quienIndico', css_class="col-3"),
+                     ),
+                )
+            )
 
 
 class antecedentesEpidimiologicosForm(forms.ModelForm):
