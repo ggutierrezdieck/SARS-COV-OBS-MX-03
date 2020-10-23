@@ -142,7 +142,12 @@ def questionnaire_view(request, id):
                         medicamentoPosts[i].appendlist(key, request.POST.getlist(key)[i])
 
         for i in range(len(medicamentoPosts)):
-            fmedicamento = medicamentoForm(medicamentoPosts[i])#, instance=med)
+            try:
+                med = medicamento.objects.get(nombreMedicamento=medicamentoPosts[i]['nombreMedicamento'])
+            except ObjectDoesNotExist:
+                med = None
+                
+            fmedicamento = medicamentoForm(medicamentoPosts[i], instance=med)
             if fmedicamento.is_valid():
                 add_id = fmedicamento.save(commit=False)
                 add_id.paciente = get_object_or_404(paciente, pk=id)

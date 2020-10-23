@@ -48,15 +48,23 @@
                 <div class=' col-sm-12'><h2  class='seccions'>Tratamiento previo a la prueba</h2></div>
             </div>
                 {% for key, value in fmedicamento.items %}
-                    <div id='medicamento'>  
+                    <div id='medicamento'>
                         {% if not forloop.first %}
-                            <br><hr><br>
+                            <hr>
                         {% endif %}
-                        {{value|crispy}}
+                         <div class='row justify-content-end'>
+                            <i class="fas fa-times-circle"  style="padding: 0 2em 0 0;"></i>  
+                        </div>
+                        {% crispy value %}
+                        {# {{value|crispy}} #}
                     </div>
                 {% empty %}
                     <div id='medicamento'>
-                        {{fmedicamento|crispy}}
+                        <div class='row justify-content-end'>
+                            <i class="fas fa-times-circle" style="padding: 0 2em 0 0;"></i>  
+                        </div>
+                        {% crispy fmedicamento %}
+                        {# {{fmedicamento|crispy }} #}
                     </div>
                 {% endfor%}
 

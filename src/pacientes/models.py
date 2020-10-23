@@ -189,7 +189,7 @@ class medicamento(models.Model):
 
     paciente = models.ForeignKey(paciente, on_delete=models.CASCADE,
                                  related_name='medicamento')
-    nombreMedicamento = models.CharField(max_length=200, blank=True, verbose_name='Nombre del medicamento')
+    nombreMedicamento = models.CharField(max_length=200, blank=True, verbose_name='Nombre del medicamento', unique=True)
     tipo = models.CharField(max_length=200, blank=True, choices=TIPO)
     fechaInicio = models.DateField(blank=True, null=True, verbose_name='Fecha de inicio')
     dosis = models.CharField(max_length=200, blank=True)
