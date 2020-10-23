@@ -146,7 +146,7 @@ def questionnaire_view(request, id):
                 med = medicamento.objects.get(nombreMedicamento=medicamentoPosts[i]['nombreMedicamento'])
             except ObjectDoesNotExist:
                 med = None
-                
+
             fmedicamento = medicamentoForm(medicamentoPosts[i], instance=med)
             if fmedicamento.is_valid():
                 add_id = fmedicamento.save(commit=False)
@@ -175,12 +175,12 @@ def questionnaire_view(request, id):
     else:
         # Handling medicamento form independently, due to to the multipel items
         fmedicamento = None
-        context['fmedicamento'] ={}
+        context['fmedicamento'] = {}
         i = 0
         try:
             for m in med:
                 fmedicamento = medicamentoForm(instance=m)
-                context['fmedicamento']['a'+ str(i)] = fmedicamento
+                context['fmedicamento']['a' + str(i)] = fmedicamento
                 i += 1
         except TypeError:
             fmedicamento = medicamentoForm(instance=med)
