@@ -3,7 +3,11 @@
     {% block content %}
 
 
-{%include 'navBar.html' %}
-{%include 'pacienteList.html' %}
-
+        {%include 'navBar.html' %}
+        <div class='row justify-content-end float' style="height:0; z-index:99">
+            <div id='alertBox' class="alert fade" role="alert" data-delay="3000">
+                <strong id='alertText'> This alert needs your attention, but it's not super important.</strong>
+            </div>
+        </div>
+        {%include 'pacienteList.html' %}
     {% endblock %}

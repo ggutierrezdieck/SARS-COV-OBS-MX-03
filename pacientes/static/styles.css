@@ -47,7 +47,7 @@ hr {
 
 #floating-header{
     display: block;
-    z-index: 99;
+    z-index: 80;
     width: 105%;
     background:var(--bgPrimary);
     padding: 1em;
@@ -59,4 +59,10 @@ hr {
         right:1vw;
         top:20vw;
 }
+
 /*Media Qieres for smaller dev*/
+
+/*Animations*/
+.fade:not(.show) {
+    transition: opacity .15s linear;
+}
