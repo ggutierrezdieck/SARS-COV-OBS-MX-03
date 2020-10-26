@@ -155,7 +155,7 @@ class pruebasForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['paciente']
         widgets = {
-                    'fechaInicio': forms.DateInput(attrs={
+                    'fechaInicioPruebas': forms.DateInput(attrs={
                                                                 'type': 'date',
                                                                 }),
                     }
