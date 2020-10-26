@@ -235,7 +235,7 @@ class pruebas(models.Model):
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='pruebas')
     pruebas = models.CharField(max_length=10, choices=PRUEBAS, blank=True, verbose_name='Tipo de prueba realizada')
-    fechaInicioPruebas = models.DateField(blank=True, null=True, verbose_name='Fecha dela prueba')
+    fechaInicioPruebas = models.DateField(blank=True, null=True, verbose_name='Fecha de la prueba')
     resultadoPCR = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (RT-PCR)')
     resultadoRapida = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (Rápida)')
     igg = models.CharField(max_length=10, choices=RESULTADOS[0:2], blank=True, verbose_name='IgG')
@@ -363,7 +363,7 @@ class seguimiento(models.Model):
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='seguimiento')
     evolucion = models.CharField(max_length=10, choices=EVOLUCION, blank=True, verbose_name='Evolución de la enfermedad')
-    fechaDefuncion = models.DateField(blank=True, null=True, verbose_name='En caso de deunción, fecha de defunción')
+    fechaDefuncion = models.DateField(blank=True, null=True, verbose_name='En caso de defunción, fecha de defunción')
     fechaIngresoHospital = models.DateField(blank=True, null=True, verbose_name='En caso de hospitalización, fecha de ingreso')
     fechaEgresoHospital = models.DateField(blank=True, null=True, verbose_name='En caso de hospitalización, fecha de egreso')
     requiereOxigeno = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='Requerimiento de oxígeno')
