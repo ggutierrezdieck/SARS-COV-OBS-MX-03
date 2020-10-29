@@ -216,7 +216,7 @@ class antecedentesEpidimiologicos(models.Model):
     relacion = models.CharField(max_length=100, blank=True, choices=RELACION, verbose_name='¿Cuál es su relación con esta(s) persona(s)?')
     # quien = models.CharField(max_length=100, blank=True)
     viaje = models.CharField(max_length=10, choices=SiNo, blank=True, verbose_name='¿Realizó algún viaje en las últimas dos semanas?')
-    pais = CountryField(verbose_name='Si su respuesta fue sí, especifique el lugar (país y ciudad)', blank=True, null=True)
+    pais = CountryField(verbose_name='Si su respuesta fue sí, especifique el lugar (país y ciudad)', blank=True)
 
 
 class pruebas(models.Model):

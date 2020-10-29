@@ -155,6 +155,9 @@ def questionnaire_view(request, id):
 
         valid_forms += 1
 
+        # Handling null country field
+        print(request.POST)
+
         # Handling the rest of the forms
         forms = [fgeneales, fcuestionario, fembarazo, fviajes, fmorbilidad,
                  fhabitos, fsintomas, ftrataminto, fanteceddentes,
