@@ -224,8 +224,8 @@ class pruebas(models.Model):
         return 'Paciente ' + str(self.id)
 
     PRUEBAS = (
-            (0, 'RT-PCR'),
-            (1, 'Prueba Rapida')
+            ('0', 'RT-PCR'),
+            ('1', 'Prueba Rapida')
         )
     RESULTADOS = (
             ('P', 'Positivo'),
@@ -326,7 +326,7 @@ class habitosSaludables(models.Model):
     verduras = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta verdura come en un día común y corriente?(Tazas)')
     pescado = models.CharField(max_length=10,  blank=True, choices=SINONOSE, verbose_name='¿Consume 100 gramos o mas de granos enteros al día?')
     granos = models.CharField(max_length=10,  blank=True, choices=SINONOSE, verbose_name='¿Consume 2 o más porciones de gra a la semana?')
-    bebidasAzucar = models.IntegerField(blank=True, null=True, choices=SINONOSE, verbose_name='¿Bebe menos de 1 litro de bebidas azucaradas a la semana?')
+    bebidasAzucar = models.CharField(max_length=10, blank=True, null=True, choices=SINONOSE, verbose_name='¿Bebe menos de 1 litro de bebidas azucaradas a la semana?')
     sal = models.CharField(max_length=10,  blank=True, choices=SINONOSE, verbose_name='Actualmente, ¿Está usted moderando o reduciendo su consumo de sal o sodio?')
     # carne = models.CharField(max_length=10,  blank=True)
     acitivadModerada = models.CharField(max_length=10,  blank=True, verbose_name='¿Cuánta actividad física moderada normalmente realiza semanalmente?')

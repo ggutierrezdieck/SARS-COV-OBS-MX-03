@@ -175,7 +175,9 @@ def questionnaire_view(request, id):
             else:
                 print('Form failed to save, due to incorrect data')
                 print(str(form.Meta.model._meta.verbose_name_raw) + ' form is not valid')
+                print(str(form.errors))
                 print(request.POST)
+
 
     else:
         # Handling medicamento form independently, due to to the multipel items
