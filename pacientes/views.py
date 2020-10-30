@@ -143,9 +143,12 @@ def questionnaire_view(request, id):
 
         for i in range(len(medicamentoPosts)):
             try:
+                if medicamentoPosts[i]['nombreMedicamento'] == '':
+                    break  
                 med = medicamento.objects.get(nombreMedicamento=medicamentoPosts[i]['nombreMedicamento'])
             except ObjectDoesNotExist:
-                med = None
+                medicamento(nombreMedicamento=medicamentoPosts[i]['nombreMedicamento'], paciente_id=id).save()
+                med = medicamento.objects.get(nombreMedicamento=medicamentoPosts[i]['nombreMedicamento'])
 
             fmedicamento = medicamentoForm(medicamentoPosts[i], instance=med)
             if fmedicamento.is_valid():
@@ -154,9 +157,6 @@ def questionnaire_view(request, id):
                 add_id.save()
 
         valid_forms += 1
-
-        # Handling null country field
-        print(request.POST)
 
         # Handling the rest of the forms
         forms = [fgeneales, fcuestionario, fembarazo, fviajes, fmorbilidad,
@@ -202,13 +202,28 @@ def questionnaire_view(request, id):
         context['fpruebas'] = fpruebas
         context['fseguridad'] = fseguridad
         context['fseguimiento'] = fseguimiento
-
+        print("Context:")
+        print(context['fmedicamento'])
     return render(request, 'questionnaire.html', context)
 
+# def get_nextautoincrement( mymodel ):
+#     from django.db import connection
+#     cursor = connection.cursor()
+#     # My SQL
+#     # select seq from sqlite_sequence WHERE name = 'Table_Name'
+#     # cursor.execute( "SELECT Auto_increment FROM information_schema.tables WHERE table_name='%s';" % \
+#                     # mymodel._meta.db_table)
+#     # SQLLite
+#     cursor.execute( "select seq from sqlite_sequence WHERE name = '%s';" % mymodel._meta.db_table)
+#     row = cursor.fetchone()
+#     cursor.close()
+#     return row[0]
 
 @login_required
 def nuevo_view(request):
     queryset = len(paciente.objects.all()) + 1
+    # queryset = get_nextautoincrement(paciente) +1 
+
     context = {
         'last_id': queryset
     }
