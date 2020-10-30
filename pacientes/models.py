@@ -179,12 +179,12 @@ class medicamento(models.Model):
         ('5', 'Otro')
         )
     RECOMENDADORES = (
-            (0, 'Medico'),
-            (1, 'Familiar'),
-            (2, 'Vecino'),
-            (3, 'Amigo'),
-            (4, 'Automedicación'),
-            (5, 'Otro'),
+            ('0', 'Medico'),
+            ('1', 'Familiar'),
+            ('2', 'Vecino'),
+            ('3', 'Amigo'),
+            ('4', 'Automedicación'),
+            ('5', 'Otro'),
         )
 
     paciente = models.ForeignKey(paciente, on_delete=models.CASCADE,
@@ -203,11 +203,11 @@ class antecedentesEpidimiologicos(models.Model):
     def __str__(self):
         return 'Paciente ' + str(self.id)
     RELACION = (
-        (0, 'Familiar'),
-        (1, 'Amigo'),
-        (2, 'Compañero de trabajo'),
-        (3, 'Pareja'),
-        (4, 'Otro'),
+        ('0', 'Familiar'),
+        ('1', 'Amigo'),
+        ('2', 'Compañero de trabajo'),
+        ('3', 'Pareja'),
+        ('4', 'Otro'),
     )
     paciente = models.OneToOneField(paciente, on_delete=models.CASCADE,
                                     related_name='antecedentes', blank=True)
