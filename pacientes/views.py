@@ -173,7 +173,9 @@ def questionnaire_view(request, id):
                 if valid_forms == len(forms) + 1:
                     return render(request, 'index.html', context)
             else:
-                print('One form is not valid')
+                print('Form failed to save, due to incorrect data')
+                print(str(form.Meta.model._meta.verbose_name_raw) + ' form is not valid')
+                print(request.POST)
 
     else:
         # Handling medicamento form independently, due to to the multipel items
@@ -202,7 +204,7 @@ def questionnaire_view(request, id):
         context['fpruebas'] = fpruebas
         context['fseguridad'] = fseguridad
         context['fseguimiento'] = fseguimiento
-        print("Context:")
+        print("Context in get fmedicamento:")
         print(context['fmedicamento'])
     return render(request, 'questionnaire.html', context)
 
