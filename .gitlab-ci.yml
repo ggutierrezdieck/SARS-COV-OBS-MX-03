@@ -47,9 +47,9 @@ staging: # Deploy to staing area, need to configur heroku
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
-    - heroku run python manage.py makemigrations --exit-code --app --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
-    - heroku run python manage.py migrate --exit-code --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
+    - dpl --provider=heroku --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
+    - heroku run python manage.py makemigrations --exit-code --app --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
+    - heroku run python manage.py migrate --exit-code --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
 
   # only:
     # - master
