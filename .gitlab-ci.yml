@@ -3,6 +3,8 @@ image: python
 # Changing pip's cache directory to be inside the project directory since we can only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  DJANGO_SUPERUSER_PASSWORD: "adminPa55"
+
 
 # Pip's cache doesn't store the python packages
 # https://pip.pypa.io/en/stable/reference/pip_install/#caching
@@ -50,7 +52,7 @@ staging: # Deploy to staing area, need to configur heroku
     - dpl --provider=heroku --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
     - heroku run python manage.py makemigrations --exit-code --app=staging-ggutierrezdieck 
     - heroku run python manage.py migrate --run-syncdb --exit-code --app=staging-ggutierrezdieck
-    - heroku run python manage.py createsuperuser --username ggutierrezdieck --password adminPa55 --noinput --email 'blank@email.com' --exit-code --app=staging-ggutierrezdieck
+    - heroku run python manage.py createsuperuser --username ggutierrezdieck --noinput --email 'blank@email.com' --exit-code --app=staging-ggutierrezdieck
 
   # only:
     # - master
