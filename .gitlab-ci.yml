@@ -50,6 +50,7 @@ staging: # Deploy to staing area, need to configur heroku
     - dpl --provider=heroku --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
     - heroku run python manage.py makemigrations --exit-code --app --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
     - heroku run python manage.py migrate --exit-code --app=staging-ggutierrezdieck --api-key=$HEROKU_STAGING_API_KEY
+    - heroku run manage.py createsuperuser2 --username ggutierrezdieck --password someAdminPWD --noinput --email 'blank@email.com'
 
   # only:
     # - master
