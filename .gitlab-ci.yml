@@ -22,6 +22,11 @@ before_script:
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
+  - echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
+  - wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
+  - apt-get update
+  - apt-get install -y heroku-toolbelt
+  - gem install dpl
 
 test:
   stage: test
@@ -32,16 +37,17 @@ test:
     - apt-get install -y python-dev python-pip
     - pip install -r requirements.txt
     - python manage.py test
+    - heroku run <your command here> --exit-code --app --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
 
-# staging: # Deploy to staing area, need to configur heroku
-#   stage: deploy
-#   script:
-#     - apt-get update -qy
-#     - apt-get install -y ruby-dev
-#     - gem install dpl
-#     - dpl --provider=heroku --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
-#   only:
-#     - master
+staging: # Deploy to staing area, need to configur heroku
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
+  # only:
+    # - master
 
 production:
   stage: deploy
