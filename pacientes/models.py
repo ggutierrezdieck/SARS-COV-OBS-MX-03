@@ -226,6 +226,7 @@ class pruebas(models.Model):
     PRUEBAS = (
             ('0', 'RT-PCR'),
             ('1', 'Prueba Rapida')
+            ('1', 'Prueba Antigeno')
         )
     RESULTADOS = (
             ('P', 'Positivo'),
@@ -240,6 +241,7 @@ class pruebas(models.Model):
     resultadoRapida = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (Rápida)')
     igg = models.CharField(max_length=10, choices=RESULTADOS[0:2], blank=True, verbose_name='IgG')
     igm = models.CharField(max_length=10, choices=RESULTADOS[0:2], blank=True, verbose_name='IgM')
+    resultadoAntigeno = models.CharField(max_length=10, choices=RESULTADOS, blank=True, verbose_name='Resultado de la prueba (Antigeno)')
 
 
 class seguridadSocial(models.Model):
