@@ -26,6 +26,8 @@ before_script:
   - wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
   - apt-get update
   - apt-get install -y heroku-toolbelt
+  - apt-get update -qy
+  - apt-get install -y python-dev python-pip
   - gem install dpl
 
 test:
