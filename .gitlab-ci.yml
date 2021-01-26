@@ -28,7 +28,6 @@ before_script:
   - apt-get install -y heroku-toolbelt
   - apt-get update -qy
   - apt-get install -y python-dev python-pip
-  - gem install dpl
 
 test:
   stage: test
