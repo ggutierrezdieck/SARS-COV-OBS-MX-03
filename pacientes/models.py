@@ -225,7 +225,7 @@ class pruebas(models.Model):
 
     PRUEBAS = (
             ('0', 'RT-PCR'),
-            ('1', 'Prueba Rapida')
+            ('1', 'Prueba Rapida'),
             ('1', 'Prueba Antigeno')
         )
     RESULTADOS = (
