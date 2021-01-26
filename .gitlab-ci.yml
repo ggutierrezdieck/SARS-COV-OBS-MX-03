@@ -38,8 +38,8 @@ test:
     - apt-get install -y python-dev python-pip
     - pip install -r requirements.txt
     - python manage.py test
-    - heroku run python manage.py makemigrations --exit-code --app --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
-    - heroku run python manage.py migrate --exit-code --app --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
+    # - heroku run python manage.py makemigrations --exit-code --app --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
+    # - heroku run python manage.py migrate --exit-code --app=sars-cov-obs-mx-03 --api-key=$HEROKU_STAGING_API_KEY
 
 staging: # Deploy to staing area, need to configur heroku
   stage: deploy
@@ -48,6 +48,9 @@ staging: # Deploy to staing area, need to configur heroku
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
+    - heroku run python manage.py makemigrations --exit-code --app --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
+    - heroku run python manage.py migrate --exit-code --app=testig-env --api-key=$HEROKU_STAGING_API_KEY
+
   # only:
     # - master
 
